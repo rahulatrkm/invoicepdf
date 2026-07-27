@@ -165,6 +165,20 @@ def app(environ, start_response):
         return respond("200 OK", "application/pdf", pdf,
                        [("Content-Disposition", "inline; filename=invoice.pdf")])
 
+    # Static SEO pages, sitemap, robots (generated into web/ at startup).
+    if method == "GET" and path == "/sitemap.xml":
+        p = _WEB_DIR / "sitemap.xml"
+        if p.exists():
+            return respond("200 OK", "application/xml", p.read_bytes())
+    if method == "GET" and path == "/robots.txt":
+        p = _WEB_DIR / "robots.txt"
+        if p.exists():
+            return respond("200 OK", "text/plain; charset=utf-8", p.read_bytes())
+    if method == "GET" and path.endswith(".html") and "/" not in path[1:]:
+        p = _WEB_DIR / path.lstrip("/")
+        if p.exists():
+            return respond("200 OK", "text/html; charset=utf-8", p.read_bytes())
+
     return respond("404 Not Found", "application/json", b'{"error": "not found"}')
 
 
