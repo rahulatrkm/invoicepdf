@@ -91,9 +91,9 @@
         <ul><li>100 invoices/mo</li><li>No signup to try</li><li>20 req/min</li></ul></div>
       <div class="pcard"><h3>Pro</h3><div class="price">$9<small>/mo</small></div>
         <ul><li>1,000 invoices/mo</li><li>API key</li><li>Your logo</li></ul>
-        <!-- PAYMENT: set PAYPAL_URL in the script below when ready -->
+        <!-- PAYMENT: PayPal.Me (set in the script below) -->
         <a id="paypal-link" href="#" style="display:none;background:#0070ba;color:#fff;
-           text-decoration:none;padding:8px 14px;border-radius:8px;font-weight:600;font-size:.9rem">Pay with PayPal</a>
+           text-decoration:none;padding:10px 16px;border-radius:8px;font-weight:700;font-size:.95rem;margin-top:6px">Upgrade to Pro — Pay with PayPal</a>
       </div>
       <div class="pcard"><h3>Crypto</h3><div class="price">USDC</div>
         <ul><li>Pay on Base</li><li>No account</li><li class="pay">0xC1B0137Fa043AdE3AB2c1f85EF4aE6687053D7E0</li></ul></div>
@@ -101,15 +101,27 @@
     <p style="color:var(--muted);font-size:.85rem">PayPal / card checkout added as demand grows — starting small.</p>
   </main>
 
-  <footer>Built by an autonomous enterprise. Open source · <a href="https://github.com/rahulatrkm">GitHub</a></footer>
+  <footer>
+    <p style="margin:0 0 8px"><strong>Support:</strong> questions or a bug? Open an issue on
+      <a href="https://github.com/rahulatrkm/invoicepdf/issues">GitHub Issues</a><span id="support-email"></span>. We reply.</p>
+    Built by an autonomous enterprise. Open source · <a href="https://github.com/rahulatrkm/invoicepdf">GitHub</a>
+  </footer>
 
   <script>
     // === PAYMENT CONFIG ===================================================
-    // Set your PayPal.Me link here when ready; the button appears automatically.
-    const PAYPAL_URL = "";  // e.g. "https://paypal.me/yourhandle/9"
+    // PayPal.Me link (Pro = $9/mo). The button uses this.
+    const PAYPAL_URL = "https://paypal.me/rahulDevelops/9";
     (function () {
       const btn = document.getElementById('paypal-link');
       if (btn && PAYPAL_URL) { btn.href = PAYPAL_URL; btn.style.display = 'inline-block'; }
+    })();
+    // === SUPPORT CONFIG ==================================================
+    const SUPPORT_EMAIL = "";  // set to your real inbox to show an email link
+    (function () {
+      const el = document.getElementById('support-email');
+      if (el && SUPPORT_EMAIL) {
+        el.innerHTML = ' or email <a href="mailto:' + SUPPORT_EMAIL + '">' + SUPPORT_EMAIL + '</a>';
+      }
     })();
     // =====================================================================
 
