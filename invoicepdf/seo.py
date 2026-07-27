@@ -130,17 +130,21 @@ def pages() -> list[Page]:
             ],
         ),
         Page(
-            slug="invoice-api.html",
-            title="Invoice API — generate invoice PDFs programmatically",
+            slug="invoice-pdf-api-json.html",
+            title="Invoice PDF API — JSON in, PDF out (no headless browser)",
             description=(
-                "A simple invoice API: POST JSON with line items, tax and totals, get a professional "
-                "invoice PDF. Exact money math, multi-currency, free tier, no signup to try."
+                "A focused invoice PDF API: POST JSON with line items, tax and totals, get a "
+                "professional invoice PDF back. Exact money math, multi-currency, free tier, no "
+                "signup, no Chromium."
             ),
-            keywords="invoice api, invoice pdf api, generate invoice pdf, billing api",
+            keywords=(
+                "invoice pdf api, invoice api json, json to invoice pdf, rest api invoice pdf, "
+                "billing api pdf"
+            ),
             intro=(
                 "Need to generate invoices from your app or billing system? InvoicePDF is a focused "
-                "<strong>invoice API</strong>: send line items, tax rate and party details as JSON, "
-                "get back a clean, professional PDF."
+                "<strong>invoice PDF API</strong>: send line items, tax rate and party details as "
+                "JSON, get back a clean, professional PDF. No headless browser, no infra."
             ),
             sections=[
                 (
@@ -155,6 +159,74 @@ def pages() -> list[Page]:
                     "<code>buyer_name</code>, <code>items[]</code> (description, quantity, "
                     "unit_price), optional <code>tax_rate_percent</code>, <code>notes</code>, "
                     "<code>due_date</code>. That's it.</p>",
+                ),
+            ],
+        ),
+        Page(
+            slug="generate-invoice-pdf-python.html",
+            title="Generate an invoice PDF in Python (fpdf2, no browser)",
+            description=(
+                "How to generate an invoice PDF in Python without a headless browser. A tiny fpdf2 "
+                "approach with exact money math — or one HTTP call to a hosted invoice PDF API."
+            ),
+            keywords=(
+                "generate invoice pdf python, python invoice pdf, fpdf2 invoice, create invoice pdf "
+                "python, python pdf invoice generator"
+            ),
+            intro=(
+                "Two clean ways to <strong>generate an invoice PDF in Python</strong>: build it "
+                "yourself with <code>fpdf2</code> (no headless Chromium, no system libraries), or "
+                "POST JSON to a hosted endpoint and get the PDF back. Here's both."
+            ),
+            sections=[
+                (
+                    "Option A — one HTTP call",
+                    "<pre>import requests\n"
+                    "pdf = requests.post('" + SITE_URL + "/invoice', json={\n"
+                    "    'number': 'INV-1', 'currency': 'USD',\n"
+                    "    'seller_name': 'Me', 'buyer_name': 'You',\n"
+                    "    'items': [{'description': 'Work', 'quantity': 1, 'unit_price': 100}],\n"
+                    "}).content\n"
+                    "open('invoice.pdf', 'wb').write(pdf)</pre>",
+                ),
+                (
+                    "Option B — build it yourself with fpdf2",
+                    "<p>fpdf2 is pure Python — no Chromium, no OS packages, so it deploys on any free "
+                    "tier. Keep money as integer cents to avoid float drift, render line items in a "
+                    "table, and call <code>pdf.output()</code>. The hosted API above is exactly this, "
+                    "productised, if you'd rather not maintain it.</p>",
+                ),
+            ],
+        ),
+        Page(
+            slug="invoice-pdf-without-headless-browser.html",
+            title="Generate invoice PDFs without a headless browser",
+            description=(
+                "Skip Puppeteer/Chromium for document PDFs. Generate invoice and receipt PDFs from "
+                "JSON with no headless browser — faster, no cold starts, free to host."
+            ),
+            keywords=(
+                "pdf without headless browser, invoice pdf no chromium, puppeteer alternative pdf, "
+                "html to pdf no browser, serverless pdf generation"
+            ),
+            intro=(
+                "Puppeteer and headless Chromium are heavy, slow to cold-start, and awkward on "
+                "serverless. For structured documents like invoices you don't need a browser at "
+                "all — InvoicePDF renders straight from JSON."
+            ),
+            sections=[
+                (
+                    "Why avoid the browser?",
+                    "<p>A headless browser ships ~300MB of Chromium, needs system libraries, and "
+                    "adds seconds of cold-start on serverless. For a document with a known layout "
+                    "that's pure overhead. A structured renderer is <strong>smaller, faster, and "
+                    "free to host</strong>.</p>",
+                ),
+                (
+                    "Same result, one call",
+                    "<p>POST your invoice JSON, get <code>application/pdf</code> back. No browser "
+                    "pool, no <code>--no-sandbox</code> flags, no memory tuning. Try it at the "
+                    "<a href='/'>live playground</a>.</p>",
                 ),
             ],
         ),

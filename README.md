@@ -1,13 +1,18 @@
-# InvoicePDF
+# InvoicePDF — Invoice PDF API (JSON in, PDF out)
 
-**Generate clean invoice & receipt PDFs from JSON — one API call.**
+**Generate invoice & receipt PDFs from JSON — one API call. No headless browser.**
 
-Stop wrestling with PDF libraries, templates, and headless browsers. POST
-structured JSON, get a professional invoice PDF back. Exact money math (integer
-minor units — no floating-point drift), tax support, notes, due dates.
+An **invoice PDF API** for developers: POST structured JSON, get a professional
+invoice or receipt PDF back. Exact money math (integer minor units — no
+floating-point drift), tax support, multi-currency, notes, due dates.
 
-Only one dependency (`fpdf2`) — **no headless browser, no system libraries** — so
+Only one dependency (`fpdf2`) — **no headless Chromium, no system libraries** — so
 it deploys free anywhere, like a static app.
+
+**Live demo:** https://invoicepdf-app.azurewebsites.net &nbsp;·&nbsp; [playground](https://invoicepdf-app.azurewebsites.net/) · [sample PDF](https://invoicepdf-app.azurewebsites.net/sample)
+
+> Keywords: invoice pdf api, generate invoice pdf, json to pdf api, invoice pdf
+> python, fpdf2 invoice, receipt pdf api, pdf without headless browser.
 
 ---
 
