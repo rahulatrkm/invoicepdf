@@ -178,6 +178,11 @@ def app(environ, start_response):
         p = _WEB_DIR / path.lstrip("/")
         if p.exists():
             return respond("200 OK", "text/html; charset=utf-8", p.read_bytes())
+    # IndexNow key file (a plain-text file at the site root proving ownership).
+    if method == "GET" and path.endswith(".txt") and "/" not in path[1:]:
+        p = _WEB_DIR / path.lstrip("/")
+        if p.exists():
+            return respond("200 OK", "text/plain; charset=utf-8", p.read_bytes())
 
     return respond("404 Not Found", "application/json", b'{"error": "not found"}')
 
