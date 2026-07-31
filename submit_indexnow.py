@@ -15,7 +15,7 @@ import json
 import urllib.error
 import urllib.request
 
-HOST = "invoicepdf-app.azurewebsites.net"
+HOST = "invoicepdf-hqz7.onrender.com"
 KEY = "928163aed2542d1be9ba9f30cd94d1dc"
 KEY_LOCATION = f"https://{HOST}/{KEY}.txt"
 

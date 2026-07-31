@@ -9,7 +9,7 @@ floating-point drift), tax support, multi-currency, notes, due dates.
 Only one dependency (`fpdf2`) — **no headless Chromium, no system libraries** — so
 it deploys free anywhere, like a static app.
 
-**Live demo:** https://invoicepdf-app.azurewebsites.net &nbsp;·&nbsp; [playground](https://invoicepdf-app.azurewebsites.net/) · [sample PDF](https://invoicepdf-app.azurewebsites.net/sample)
+**Live demo:** https://invoicepdf-hqz7.onrender.com &nbsp;·&nbsp; [playground](https://invoicepdf-hqz7.onrender.com/) · [sample PDF](https://invoicepdf-hqz7.onrender.com/sample)
 
 > Keywords: invoice pdf api, generate invoice pdf, json to pdf api, invoice pdf
 > python, fpdf2 invoice, receipt pdf api, pdf without headless browser.

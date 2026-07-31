@@ -15,7 +15,7 @@ import os
 from dataclasses import dataclass, field
 from pathlib import Path
 
-SITE_URL = os.environ.get("INVOICEPDF_SITE_URL", "https://invoicepdf-app.azurewebsites.net").rstrip("/")
+SITE_URL = os.environ.get("INVOICEPDF_SITE_URL", "https://invoicepdf-hqz7.onrender.com").rstrip("/")
 _WEB_DIR = Path(__file__).resolve().parent.parent / "web"
 
 

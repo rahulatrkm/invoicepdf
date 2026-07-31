@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Generate invoice PDFs without a headless browser · InvoicePDF</title>
+  <meta name="description" content="Skip Puppeteer/Chromium for document PDFs. Generate invoice and receipt PDFs from JSON with no headless browser — faster, no cold starts, free to host." />
+  <meta name="keywords" content="pdf without headless browser, invoice pdf no chromium, puppeteer alternative pdf, html to pdf no browser, serverless pdf generation" />
+  <link rel="canonical" href="https://invoicepdf-hqz7.onrender.com/invoice-pdf-without-headless-browser.html" />
+  <meta property="og:title" content="Generate invoice PDFs without a headless browser" />
+  <meta property="og:description" content="Skip Puppeteer/Chromium for document PDFs. Generate invoice and receipt PDFs from JSON with no headless browser — faster, no cold starts, free to host." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://invoicepdf-hqz7.onrender.com/invoice-pdf-without-headless-browser.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <style>
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+            color:#0f172a; background:#faf5ff; line-height:1.65; }
+    .wrap { max-width:720px; margin:0 auto; padding:40px 20px 64px; }
+    h1 { font-size:2rem; line-height:1.2; }
+    h2 { margin-top:30px; font-size:1.25rem; }
+    a { color:#7c3aed; }
+    code { background:#f3e8ff; padding:2px 6px; border-radius:6px; font-size:.9em; }
+    pre { background:#0f172a; color:#e2e8f0; padding:14px; border-radius:10px; overflow:auto; font-size:.82rem; }
+    .cta { background:#fff; border:1px solid #e9d5ff; border-radius:14px; padding:20px; margin:26px 0; }
+    .btn { background:#7c3aed; color:#fff; text-decoration:none; padding:11px 18px; border-radius:10px; font-weight:600; display:inline-block; }
+    nav.crumb { font-size:.85rem; color:#64748b; margin-bottom:16px; }
+    .related { margin-top:44px; border-top:1px solid #e9d5ff; padding-top:20px; }
+    footer { color:#64748b; font-size:.85rem; margin-top:40px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="crumb"><a href="/">InvoicePDF</a> · guide</nav>
+    <h1>Generate invoice PDFs without a headless browser</h1>
+    <p>Puppeteer and headless Chromium are heavy, slow to cold-start, and awkward on serverless. For structured documents like invoices you don't need a browser at all — InvoicePDF renders straight from JSON.</p>
+
+    <div class="cta">
+      <strong>Try it now — free, no signup:</strong>
+      <p style="margin:10px 0 0"><a class="btn" href="/">Open the live playground →</a>
+        &nbsp; <a href="/sample">see a sample PDF</a></p>
+    </div>
+
+    <h2>Why avoid the browser?</h2>
+<p>A headless browser ships ~300MB of Chromium, needs system libraries, and adds seconds of cold-start on serverless. For a document with a known layout that's pure overhead. A structured renderer is <strong>smaller, faster, and free to host</strong>.</p>
+<h2>Same result, one call</h2>
+<p>POST your invoice JSON, get <code>application/pdf</code> back. No browser pool, no <code>--no-sandbox</code> flags, no memory tuning. Try it at the <a href='/'>live playground</a>.</p>
+
+
+    <div class="related">
+      <h2>Related guides</h2>
+      <ul><li><a href="/html-to-pdf-api.html">HTML to PDF API — the simple way (no headless browser)</a></li><li><a href="/invoice-pdf-api-json.html">Invoice PDF API — JSON in, PDF out (no headless browser)</a></li><li><a href="/generate-invoice-pdf-python.html">Generate an invoice PDF in Python (fpdf2, no browser)</a></li><li><a href="/generate-receipt-pdf.html">Generate a receipt PDF from JSON</a></li></ul>
+      <p><a href="/">← Back to InvoicePDF</a></p>
+    </div>
+    <footer>InvoicePDF — generate invoice/receipt PDFs from JSON. Built by an autonomous enterprise.</footer>
+  </div>
+</body>
+</html>

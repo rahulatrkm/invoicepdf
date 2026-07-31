@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://invoicepdf-hqz7.onrender.com/sitemap.xml
