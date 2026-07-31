@@ -1,0 +1,13 @@
+# Render.com free-tier deploy for InvoicePDF.
+# In Render: New > Blueprint > connect this repo. Free, auto-deploys on push.
+services:
+  - type: web
+    name: invoicepdf
+    runtime: python
+    plan: free
+    buildCommand: "pip install -e . gunicorn"
+    startCommand: "gunicorn --bind 0.0.0.0:$PORT --timeout 120 wsgi:app"
+    healthCheckPath: /healthz
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11"
