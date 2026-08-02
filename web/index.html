@@ -139,7 +139,7 @@
   "tax_rate_percent": 10,
   "notes": "Thank you for your business!"
 }</textarea>
-      <div style="margin-top:12px"><button onclick="gen()">Generate PDF</button>
+      <div style="margin-top:12px"><button id="genBtn">Generate PDF</button>
         <span id="msg" style="color:var(--muted);font-size:.85rem;margin-left:8px"></span></div>
     </div>
 
@@ -211,6 +211,7 @@
         msg.textContent = 'Done — opened your PDF.';
       } catch (e) { msg.textContent = 'Error: ' + e; }
     }
-  </script>
+    document.getElementById("genBtn").addEventListener("click", gen);
+</script>
 </body>
 </html>
