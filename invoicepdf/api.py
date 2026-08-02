@@ -153,6 +153,10 @@ def app(environ, start_response):
             return respond("200 OK", "text/html; charset=utf-8", p.read_bytes())
     if method == "GET" and path == "/healthz":
         return respond("200 OK", "application/json", b'{"status": "ok"}')
+    if method == "GET" and path == "/og.png":
+        p = _WEB_DIR / "og.png"
+        if p.exists():
+            return respond("200 OK", "image/png", p.read_bytes())
     if method == "GET" and path == "/sample":
         return respond("200 OK", "application/pdf", invoice_from_json(_SAMPLE),
                        [("Content-Disposition", "inline; filename=sample.pdf")])
