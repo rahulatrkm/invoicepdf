@@ -95,6 +95,9 @@ class Handler(BaseHTTPRequestHandler):
             self._file("index.html", "text/html; charset=utf-8")
         elif route == "/healthz":
             self._json({"status": "ok"})
+        elif route == "/og.png":
+            # crawlers reject a preview image served as anything but image/*
+            self._file("og.png", "image/png")
         elif route == "/sample":
             self._pdf(invoice_from_json(_SAMPLE))
         else:
