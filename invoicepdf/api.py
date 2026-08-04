@@ -25,6 +25,8 @@ _WEB_DIR = Path(__file__).resolve().parent.parent / "web"
 
 _RATE_LIMIT = 20
 _RATE_WINDOW_S = 60.0
+# An invoice is a small piece of JSON. Anything past this is not a customer.
+_MAX_BODY_BYTES = 256 * 1024
 _hits: dict[str, list[float]] = defaultdict(list)
 
 _SAMPLE = {
@@ -53,6 +55,47 @@ def _rate_ok(ip: str) -> bool:
         return False
     window.append(now)
     return True
+
+
+def _client_ip(environ) -> str:
+    """The address to rate limit, read the one way a caller cannot choose.
+
+    Behind a host's proxy every request arrives from the same address, so
+    REMOTE_ADDR alone puts everybody in one bucket. Trusting the first entry of
+    X-Forwarded-For is worse, because the caller sends that header and the proxy
+    only appends to it — a new value each request means a new bucket each
+    request and no limit at all. The last hop is the one the proxy wrote.
+    """
+    forwarded = environ.get("HTTP_X_FORWARDED_FOR", "")
+    hops = [h.strip() for h in forwarded.split(",") if h.strip()]
+    return hops[-1] if hops else environ.get("REMOTE_ADDR", "?")
+
+
+class BodyTooLarge(Exception):
+    """The request body is larger than this service will hold in memory."""
+
+
+def _read_body(stream, declared: str) -> bytes:
+    """Read at most ``_MAX_BODY_BYTES``, whatever the caller claims to be sending.
+
+    The length was previously taken at its word and handed straight to read(),
+    so ``Content-Length: 1073741824`` asked the process for a gigabyte before a
+    single byte was inspected.
+    """
+    try:
+        length = int(declared or "0")
+    except ValueError:
+        raise BodyTooLarge("invalid Content-Length") from None
+    if length < 0:
+        raise BodyTooLarge("invalid Content-Length")
+    if length > _MAX_BODY_BYTES:
+        raise BodyTooLarge("request body too large")
+    if not length:
+        return b"{}"
+    body = stream.read(min(length, _MAX_BODY_BYTES))
+    if len(body) > _MAX_BODY_BYTES:
+        raise BodyTooLarge("request body too large")
+    return body
 
 
 # --- stdlib server -------------------------------------------------------
@@ -110,8 +153,11 @@ class Handler(BaseHTTPRequestHandler):
         if not _rate_ok(self.client_address[0]):
             self._json({"error": "rate limit exceeded — grab an API key"}, 429)
             return
-        length = int(self.headers.get("Content-Length", "0"))
-        raw = self.rfile.read(length) if length else b"{}"
+        try:
+            raw = _read_body(self.rfile, self.headers.get("Content-Length", "0"))
+        except BodyTooLarge as exc:
+            self._json({"error": str(exc)}, 413)
+            return
         try:
             data = json.loads(raw.decode("utf-8"))
             pdf = invoice_from_json(data)
@@ -161,9 +207,17 @@ def app(environ, start_response):
         return respond("200 OK", "application/pdf", invoice_from_json(_SAMPLE),
                        [("Content-Disposition", "inline; filename=sample.pdf")])
     if method == "POST" and path == "/invoice":
+        # The stdlib server above has always rate limited. This is the path that
+        # actually runs in production, and it did not.
+        if not _rate_ok(_client_ip(environ)):
+            return respond("429 Too Many Requests", "application/json",
+                           json.dumps({"error": "rate limit exceeded — grab an API key"}).encode())
         try:
-            length = int(environ.get("CONTENT_LENGTH", "0") or "0")
-            raw = environ["wsgi.input"].read(length) if length else b"{}"
+            raw = _read_body(environ["wsgi.input"], environ.get("CONTENT_LENGTH", "0"))
+        except BodyTooLarge as exc:
+            return respond("413 Payload Too Large", "application/json",
+                           json.dumps({"error": str(exc)}).encode())
+        try:
             data = json.loads(raw.decode("utf-8"))
             pdf = invoice_from_json(data)
         except (json.JSONDecodeError, InvoiceError, KeyError, TypeError, ValueError) as exc:
